@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NRBAssetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="Asset_No" />
+          </Key>
+          <Property Name="Asset_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateCreated" Type="date" />
+          <Property Name="Asset_Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Serial_No" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Acquired_Date" Type="datetime" Nullable="false" />
+          <Property Name="DistrictID" Type="bigint" Nullable="false" />
+          <Property Name="Designated_Office" Type="int" Nullable="false" />
+          <Property Name="Designated_Department" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Room_No" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="custodian" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="300" />
+          <Property Name="Source_of_funds" Type="nvarchar" MaxLength="100" />
+          <Property Name="Landing_cost" Type="int" />
+          <Property Name="EditUser" Type="nvarchar" MaxLength="100" />
+          <Property Name="Quantity" Type="bigint" />
+        </EntityType>
+        <EntityType Name="AssetLocations">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DistrictID" Type="bigint" Nullable="false" />
+          <Property Name="place" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="100" />
+          <Property Name="TimeOfLastDownload" Type="datetime" />
+          <Property Name="TimeOfLastUpload" Type="datetime" />
+          <Property Name="RegionId" Type="bigint" Nullable="false" />
+          <Property Name="EditUser" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EditMachine" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateOfEdit" Type="datetime" Nullable="false" />
+          <Property Name="Version" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Issuance">
+          <Key>
+            <PropertyRef Name="Issuance_ID" />
+          </Key>
+          <Property Name="Issuance_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Asset_No" Type="int" />
+          <Property Name="Date_of_Issue" Type="datetime" />
+          <Property Name="Issued_to" Type="nvarchar" MaxLength="255" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Issued_by" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateRequested" Type="date" Nullable="false" />
+          <Property Name="SourceDistrict" Type="bigint" Nullable="false" />
+          <Property Name="SourceLocation" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DestinationDistrict" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DestinationLocation" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ItemStatus" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ReasonForTransfer" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="EditUser" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="OtherNames" Type="nvarchar" MaxLength="255" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UserROle" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsUserActive" Type="bigint" />
+        </EntityType>
+        <Association Name="FK__Asset__DistrictI__73BA3083">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetLoca__Distr__1A14E395">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="AssetLocations" Type="Self.AssetLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="AssetLocations">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Issuance__Asset___29221CFB">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="0..1" />
+          <End Role="Issuance" Type="Self.Issuance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="Asset_No" />
+            </Principal>
+            <Dependent Role="Issuance">
+              <PropertyRef Name="Asset_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__Source__6FE99F9F">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="SourceDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NRBAssetsModelStoreContainer">
+          <EntitySet Name="Asset" EntityType="Self.Asset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetLocations" EntityType="Self.AssetLocations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Issuance" EntityType="Self.Issuance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Asset__DistrictI__73BA3083" Association="Self.FK__Asset__DistrictI__73BA3083">
+            <End Role="District" EntitySet="District" />
+            <End Role="Asset" EntitySet="Asset" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetLoca__Distr__1A14E395" Association="Self.FK__AssetLoca__Distr__1A14E395">
+            <End Role="District" EntitySet="District" />
+            <End Role="AssetLocations" EntitySet="AssetLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Issuance__Asset___29221CFB" Association="Self.FK__Issuance__Asset___29221CFB">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="Issuance" EntitySet="Issuance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__Source__6FE99F9F" Association="Self.FK__Requests__Source__6FE99F9F">
+            <End Role="District" EntitySet="District" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NRBAssetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="Asset_No" />
+          </Key>
+          <Property Name="Asset_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCreated" Type="DateTime" Precision="0" />
+          <Property Name="Asset_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Manufacturer" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Serial_No" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Acquired_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DistrictID" Type="Int64" Nullable="false" />
+          <Property Name="Designated_Office" Type="Int32" Nullable="false" />
+          <Property Name="Designated_Department" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Room_No" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="custodian" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Source_of_funds" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Landing_cost" Type="Int32" />
+          <Property Name="EditUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="District" Relationship="Self.FK__Asset__DistrictI__73BA3083" FromRole="Asset" ToRole="District" />
+          <Property Name="Quantity" Type="Int64" />
+          <NavigationProperty Name="Issuances" Relationship="NRBAssetsModel.FK__Issuance__Asset___29221CFB" FromRole="Asset" ToRole="Issuance" />
+        </EntityType>
+        <EntityType Name="AssetLocation">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictID" Type="Int64" Nullable="false" />
+          <Property Name="place" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="District" Relationship="Self.FK__AssetLoca__Distr__1A14E395" FromRole="AssetLocations" ToRole="District" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TimeOfLastDownload" Type="DateTime" Precision="3" />
+          <Property Name="TimeOfLastUpload" Type="DateTime" Precision="3" />
+          <Property Name="RegionId" Type="Int64" Nullable="false" />
+          <Property Name="EditUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EditMachine" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfEdit" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Version" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Assets" Relationship="Self.FK__Asset__DistrictI__73BA3083" FromRole="District" ToRole="Asset" />
+          <NavigationProperty Name="AssetLocations" Relationship="Self.FK__AssetLoca__Distr__1A14E395" FromRole="District" ToRole="AssetLocations" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__Source__6FE99F9F" FromRole="District" ToRole="Requests" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateRequested" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SourceDistrict" Type="Int64" Nullable="false" />
+          <Property Name="SourceLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DestinationDistrict" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DestinationLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItemStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReasonForTransfer" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EditUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="District" Relationship="Self.FK__Requests__Source__6FE99F9F" FromRole="Requests" ToRole="District" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OtherNames" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserROle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsUserActive" Type="Int64" />
+        </EntityType>
+        <Association Name="FK__Asset__DistrictI__73BA3083">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AssetLoca__Distr__1A14E395">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="AssetLocations" Type="Self.AssetLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="AssetLocations">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__Source__6FE99F9F">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="SourceDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NRBAssetsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assets" EntityType="Self.Asset" />
+          <EntitySet Name="AssetLocations" EntityType="Self.AssetLocation" />
+          <EntitySet Name="Districts" EntityType="Self.District" />
+          <EntitySet Name="Requests" EntityType="Self.Request" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Asset__DistrictI__73BA3083" Association="Self.FK__Asset__DistrictI__73BA3083">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Asset" EntitySet="Assets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AssetLoca__Distr__1A14E395" Association="Self.FK__AssetLoca__Distr__1A14E395">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="AssetLocations" EntitySet="AssetLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__Source__6FE99F9F" Association="Self.FK__Requests__Source__6FE99F9F">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <EntitySet Name="Issuances" EntityType="NRBAssetsModel.Issuance" />
+          <AssociationSet Name="FK__Issuance__Asset___29221CFB" Association="NRBAssetsModel.FK__Issuance__Asset___29221CFB">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="Issuance" EntitySet="Issuances" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Issuance">
+          <Key>
+            <PropertyRef Name="Issuance_ID" />
+          </Key>
+          <Property Name="Issuance_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Asset_No" Type="Int32" />
+          <Property Name="Date_of_Issue" Type="DateTime" Precision="3" />
+          <Property Name="Issued_to" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Issued_by" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Asset" Relationship="NRBAssetsModel.FK__Issuance__Asset___29221CFB" FromRole="Issuance" ToRole="Asset" />
+        </EntityType>
+        <Association Name="FK__Issuance__Asset___29221CFB">
+          <End Type="NRBAssetsModel.Asset" Role="Asset" Multiplicity="0..1" />
+          <End Type="NRBAssetsModel.Issuance" Role="Issuance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="Asset_No" />
+            </Principal>
+            <Dependent Role="Issuance">
+              <PropertyRef Name="Asset_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NRBAssetsModelStoreContainer" CdmEntityContainer="NRBAssetsEntities">
+          <EntitySetMapping Name="Assets">
+            <EntityTypeMapping TypeName="NRBAssetsModel.Asset">
+              <MappingFragment StoreEntitySet="Asset">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Asset_No" ColumnName="Asset_No" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Asset_Name" ColumnName="Asset_Name" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Serial_No" ColumnName="Serial_No" />
+                <ScalarProperty Name="Acquired_Date" ColumnName="Acquired_Date" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="Designated_Office" ColumnName="Designated_Office" />
+                <ScalarProperty Name="Designated_Department" ColumnName="Designated_Department" />
+                <ScalarProperty Name="Room_No" ColumnName="Room_No" />
+                <ScalarProperty Name="custodian" ColumnName="custodian" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Source_of_funds" ColumnName="Source_of_funds" />
+                <ScalarProperty Name="Landing_cost" ColumnName="Landing_cost" />
+                <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetLocations">
+            <EntityTypeMapping TypeName="NRBAssetsModel.AssetLocation">
+              <MappingFragment StoreEntitySet="AssetLocations">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="place" ColumnName="place" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="NRBAssetsModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="TimeOfLastDownload" ColumnName="TimeOfLastDownload" />
+                <ScalarProperty Name="TimeOfLastUpload" ColumnName="TimeOfLastUpload" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+                <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+                <ScalarProperty Name="EditMachine" ColumnName="EditMachine" />
+                <ScalarProperty Name="DateOfEdit" ColumnName="DateOfEdit" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="NRBAssetsModel.Request">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="DateRequested" ColumnName="DateRequested" />
+                <ScalarProperty Name="SourceDistrict" ColumnName="SourceDistrict" />
+                <ScalarProperty Name="SourceLocation" ColumnName="SourceLocation" />
+                <ScalarProperty Name="DestinationDistrict" ColumnName="DestinationDistrict" />
+                <ScalarProperty Name="DestinationLocation" ColumnName="DestinationLocation" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemStatus" ColumnName="ItemStatus" />
+                <ScalarProperty Name="ReasonForTransfer" ColumnName="ReasonForTransfer" />
+                <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="NRBAssetsModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="NRBAssetsModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="OtherNames" ColumnName="OtherNames" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserROle" ColumnName="UserROle" />
+                <ScalarProperty Name="IsUserActive" ColumnName="IsUserActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Issuances">
+            <EntityTypeMapping TypeName="NRBAssetsModel.Issuance">
+              <MappingFragment StoreEntitySet="Issuance">
+                <ScalarProperty Name="Issued_by" ColumnName="Issued_by" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Issued_to" ColumnName="Issued_to" />
+                <ScalarProperty Name="Date_of_Issue" ColumnName="Date_of_Issue" />
+                <ScalarProperty Name="Asset_No" ColumnName="Asset_No" />
+                <ScalarProperty Name="Issuance_ID" ColumnName="Issuance_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
