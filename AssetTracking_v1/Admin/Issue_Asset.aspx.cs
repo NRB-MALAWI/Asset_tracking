@@ -19,7 +19,11 @@ namespace AssetTracking_v1.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             //Display_Data();
-            GetAsset();
+            if(!IsPostBack)
+            {
+                GetAsset();
+            }
+            
         }
         void GetAsset()
         {
@@ -82,17 +86,32 @@ namespace AssetTracking_v1.Admin
 
         protected void txtAssetName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //using (SqlConnection con = new SqlConnection(ConneString))
+            //{
+            //    string query = "select a.Asset_No,a.Asset_Name,d.Name as District,l.place as Office,a.Designated_Department,a.Quantity from Asset a " +
+            //        "join District d on d.DistrictId=a.DistrictID join AssetLocations l on l.LocationID=a.Designated_Office where a.Asset_Name='"+txtAssetName.SelectedValue+"'";
+            //    using (SqlCommand cmd = new SqlCommand(query, con))
+            //    {
+            //        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+            //        {
+            //            DataTable dt = new DataTable();
+            //            da.Fill(dt);
+            //            GridView1.DataSource = dt;
+            //            GridView1.DataBind();
+            //        }
+            //    }
+            //}
             var context = (from a in assetsEntities.Assets
                            join d in assetsEntities.Districts
                            on a.DistrictID equals d.DistrictId
                            join l in assetsEntities.AssetLocations
                            on a.Designated_Office equals l.LocationID
-                           where a.Asset_Name.Contains(txtAssetName.SelectedValue.ToString())
+                           where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
                            select new
                            {
                                a.Asset_No,
                                a.Asset_Name,
-                               d.Name,
+                               District=d.Name,
                                l.place,
                                a.Designated_Department,
                                a.Quantity
@@ -104,7 +123,40 @@ namespace AssetTracking_v1.Admin
 
         protected void btnSearchAssetName_Click(object sender, EventArgs e)
         {
-            Display_Data();
+            using (SqlConnection con = new SqlConnection(ConneString))
+            {
+                string query = "select a.Asset_No,a.Asset_Name,d.Name as District,l.place as Office,a.Designated_Department,a.Quantity from Asset a " +
+                    "join District d on d.DistrictId=a.DistrictID join AssetLocations l on l.LocationID=a.Designated_Office where a.Asset_Name='" + txtAssetName.SelectedValue + "'";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        GridView1.DataSource = dt;
+                        GridView1.DataBind();
+                    }
+                }
+            }
+
+            //var context = (from a in assetsEntities.Assets
+            //               join d in assetsEntities.Districts
+            //               on a.DistrictID equals d.DistrictId
+            //               join l in assetsEntities.AssetLocations
+            //               on a.Designated_Office equals l.LocationID
+            //               where a.Asset_Name.Contains("BRK")
+            //               select new
+            //               {
+            //                   a.Asset_No,
+            //                   a.Asset_Name,
+            //                   d.Name,
+            //                   l.place,
+            //                   a.Designated_Department,
+            //                   a.Quantity
+            //               }
+            //               ).ToList();
+            //GridView1.DataSource = context;
+            //GridView1.DataBind();
         }
     }
 }
