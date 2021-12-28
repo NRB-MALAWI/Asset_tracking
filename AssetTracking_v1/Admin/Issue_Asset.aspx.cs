@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -14,47 +15,31 @@ namespace AssetTracking_v1.Admin
     {
         NRBAssetsEntities assetsEntities = new NRBAssetsEntities();
         SqlConnection con = new SqlConnection(@"Data Source=issah;Initial Catalog=NRBAssets;Integrated Security=True");
+        string ConneString = ConfigurationManager.ConnectionStrings["NRBAssetsConnectionString"].ToString();
         protected void Page_Load(object sender, EventArgs e)
         {
-            Display_Data();
+            //Display_Data();
             GetAsset();
         }
         void GetAsset()
         {
-            //string query = "select Asset_Name from Asset group by Asset_Name";
-            //SqlDataAdapter da = new SqlDataAdapter(query, con);
-            //DataSet ds = new DataSet();
-            //da.Fill(ds);
-            //if (ds.Tables[0].Rows.Count > 0)
-            //{
-            //    txtAssetName.DataSource = ds;
-            //    txtAssetName.DataBind();
-            //    txtAssetName.Items.Insert(0, new ListItem("Choose Asset"));
-            //    txtAssetName.SelectedIndex = 0;
-            //}
-
-            //var query = from r in assetsEntities.Assets
-            //            group r by r.Asset_Name into g
-            //            select new
-            //            {
-            //                Location = g.Key,
-            //                //Buildings = g.Count()
-            //            };
-            //txtAssetName.DataSource = query.ToList();
-            //txtAssetName.DataBind();
-            //txtAssetName.Items.Insert(0, "SELECT DISTRICT");
-            //var context = from d in assetsEntities.Assets
-
-
-            //                  //orderby d.Asset_Name
-            //              select new
-            //              {
-            //                  d.Asset_No,
-            //                  d.Asset_Name
-            //              };
-
-            //txtAssetName.DataSource = context.ToList();
-            //txtAssetName.DataBind();
+            
+            using (SqlConnection con = new SqlConnection(ConneString))
+            {
+                string query = "select Asset_Name from Asset group by Asset_Name";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        txtAssetName.DataSource = dt;
+                        txtAssetName.DataBind();
+                        txtAssetName.Items.Insert(0, "SELECT ASSET");
+                    }
+                }
+            }
+            
         }
         void Display_Data()
         {
@@ -93,6 +78,33 @@ namespace AssetTracking_v1.Admin
                 _entity.Assets.Add(asset);
                 _entity.SaveChanges();
             }
+        }
+
+        protected void txtAssetName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var context = (from a in assetsEntities.Assets
+                           join d in assetsEntities.Districts
+                           on a.DistrictID equals d.DistrictId
+                           join l in assetsEntities.AssetLocations
+                           on a.Designated_Office equals l.LocationID
+                           where a.Asset_Name.Contains(txtAssetName.SelectedValue.ToString())
+                           select new
+                           {
+                               a.Asset_No,
+                               a.Asset_Name,
+                               d.Name,
+                               l.place,
+                               a.Designated_Department,
+                               a.Quantity
+                           }
+                           ).ToList();
+            GridView1.DataSource = context;
+            GridView1.DataBind();
+        }
+
+        protected void btnSearchAssetName_Click(object sender, EventArgs e)
+        {
+            Display_Data();
         }
     }
 }

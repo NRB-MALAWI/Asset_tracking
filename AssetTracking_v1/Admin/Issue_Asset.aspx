@@ -19,12 +19,10 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <div class="input-group custom-search-form">
-                                    <asp:DropDownList ID="txtAssetName" CssClass="form-control" runat="server" DataTextField="Asset_Name"  DataValueField="Asset_Name" />
+                                    <asp:DropDownList ID="txtAssetName" CssClass="form-control" runat="server" DataTextField="Asset_Name" DataValueField="Asset_Name" OnSelectedIndexChanged="txtAssetName_SelectedIndexChanged" />
                                     <%--<input type="text" id="txtAssetName" class="form-control" placeholder="Search for Asset Name...">--%>
-                                    <asp:SqlDataSource runat="server" ID="SqlDataSource1" ConnectionString='<%$ ConnectionStrings:NRBAssetsConnectionString2 %>' SelectCommand="SELECT Asset_Name FROM Asset GROUP BY Asset_Name"></asp:SqlDataSource>
                                     <span class="input-group-btn">
-                                        <asp:Button Text="Search" runat="server" ID="btnSearchAssetName" CssClass="btn btn-primary" />
-                                        
+                                        <asp:Button Text="Search" runat="server" ID="btnSearchAssetName" CssClass="btn btn-primary" OnClick="btnSearchAssetName_Click" />
                                     </span>
                                 </div>
                             </div>
