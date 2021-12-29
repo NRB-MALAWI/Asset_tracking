@@ -1,20 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Administrator.Master" AutoEventWireup="true" CodeBehind="View_Assets.aspx.cs" Inherits="AssetTracking_v1.Admin.View_Assets" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Administrator.Master" AutoEventWireup="true" CodeBehind="View_Asset_Issuance.aspx.cs" Inherits="AssetTracking_v1.Admin.View_Asset_Issuance" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1 class="page-header">Asset List</h1>
+    <h1 class="page-header">Asset Issuances</h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" id="txtAssetNumber" runat="server" placeholder="Search for Asset Number...">
-                                    <span class="input-group-btn">
-                                        <asp:Button ID="btnSearchAssetNumber" Text="Search" runat="server" CssClass="btn btn-primary" />
-                                    </span>
-                                </div>
-                            </div>
+                    <i></i>
+
+                    <div class="pull-right">
+                        <div class="btn-group">
                         </div>
                     </div>
                 </div>

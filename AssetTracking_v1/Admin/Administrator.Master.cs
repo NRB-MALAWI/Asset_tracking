@@ -11,14 +11,13 @@ namespace AssetTracking_v1.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Usernamelbl.Text!="username")
+            Usernamelbl.Text = UserLogin.username;
+
+            if (Usernamelbl.Text=="")
             {
-                Usernamelbl.Text = UserLogin.username;
+                Response.Redirect(@"~/Signin.aspx");
             }
-            else
-            {
-                Response.Redirect(@"~/Default.aspx");
-            }
+            
         }
     }
 }

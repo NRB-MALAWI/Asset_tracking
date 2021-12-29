@@ -11,26 +11,8 @@ namespace AssetTracking_v1.Admin
 {
 
 
-    public partial class View_Assets
+    public partial class View_Asset_Issuance
     {
-
-        /// <summary>
-        /// txtAssetNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAssetNumber;
-
-        /// <summary>
-        /// btnSearchAssetNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearchAssetNumber;
 
         /// <summary>
         /// GridView1 control.

@@ -29,7 +29,8 @@ namespace AssetTracking_v1
 
                 if (UserExist != null)
                 {
-                    UserLogin.username = assetsEntities.Users.FirstOrDefault(a => a.Username.Equals(UserExist.Username)).ToString();
+                    //UserLogin.username = assetsEntities.Users.FirstOrDefault(a => a.Username.Equals(UserExist.Username)).ToString();
+                    UserLogin.username = UserExist.Username;
 
                     if (UserExist.Password.Equals(password))
                     {
@@ -56,9 +57,10 @@ namespace AssetTracking_v1
             }
         }
 
+        [Obsolete]
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Admin/Default.aspx");
+            Authenticate_User();
         }
     }
 }

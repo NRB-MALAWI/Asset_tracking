@@ -15,6 +15,15 @@ namespace AssetTracking_v1.Admin
     {
 
         /// <summary>
+        /// txtAssetNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAssetNumber;
+
+        /// <summary>
         /// btnSearchAssetNumber control.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,24 @@ namespace AssetTracking_v1.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearchAssetName;
+
+        /// <summary>
+        /// drpSearchAssetbyDistrict control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drpSearchAssetbyDistrict;
+
+        /// <summary>
+        /// btnSearchbyDistrict control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchbyDistrict;
 
         /// <summary>
         /// GridView1 control.
@@ -121,5 +148,14 @@ namespace AssetTracking_v1.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel;
+
+        /// <summary>
+        /// MSGLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label MSGLabel;
     }
 }

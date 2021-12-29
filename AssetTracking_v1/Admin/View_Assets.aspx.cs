@@ -33,8 +33,9 @@ namespace AssetTracking_v1.Admin
                                l.place,
                                a.Designated_Department,
                                a.DateCreated,
-                               a.Acquired_Date,
-                               a.Status
+                               Date_Acquired=a.Acquired_Date.Year,
+                               a.Status,
+                               a.Quantity
                            }
                            ).ToList();
             GridView1.DataSource = context;

@@ -43,7 +43,7 @@ namespace AssetTracking_v1.Admin
                 assetsEntities.AssetLocations.Add(asset);
                 assetsEntities.SaveChanges();
 
-                MsgLabel.Text = "Location " + asset.place + "Saved Successfully";
+                MsgLabel.Text = "Location " + asset.place + "of " + DistrictCtDropDownList.SelectedValue + "Saved Successfully";
 
                 txtPlace.Text = string.Empty;
             }
