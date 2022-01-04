@@ -368,6 +368,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NRBAssetsDataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="NRBAssetsDataSet7.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NRBAssetsDataSet7.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PRO\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -434,6 +439,17 @@
     </None>
     <Content Include="NRBAssetsDataSet1.xss">
       <DependentUpon>NRBAssetsDataSet1.xsd</DependentUpon>
+    </Content>
+    <Content Include="NRBAssetsDataSet7.xsc">
+      <DependentUpon>NRBAssetsDataSet7.xsd</DependentUpon>
+    </Content>
+    <None Include="NRBAssetsDataSet7.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>NRBAssetsDataSet7.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="NRBAssetsDataSet7.xss">
+      <DependentUpon>NRBAssetsDataSet7.xsd</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <Content Include="PRO\PRO.Master" />

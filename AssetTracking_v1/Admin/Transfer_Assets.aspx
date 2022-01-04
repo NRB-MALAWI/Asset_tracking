@@ -51,16 +51,24 @@
                 <div class="panel-body">
                     <div class="panel-body">
                         <div class="form-group">
-                         <label>Asset Name</label>
-                        <input type="text" id="" class="form-control" placeholder="Asset Name">
+                            <label>Asset Name</label>
+                            <input type="text" id="" class="form-control" placeholder="Asset Name">
                         </div>
                         <div class="form-group">
-                        <label>Asset Location</label>
-                        <input type="text" id="" class="form-control" placeholder="Asset Location">
+                            <label>Asset Current District Location</label>
+                            <input type="text" id="" class="form-control" placeholder="Asset Location">
                         </div>
                         <div class="form-group">
-                         <label>Quantity in stock</label>
-                        <input type="text" id="" class="form-control" placeholder="Quantity">
+                            <label>Asset Current Office Location</label>
+                            <input type="text" id="" class="form-control" placeholder="Asset Location">
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity in stock</label>
+                            <input type="text" id="" class="form-control" placeholder="Quantity">
+                        </div>
+                        <div class="form-group">
+                            <label>Current Custodian</label>
+                            <input type="text" id="" class="form-control" placeholder="Custodian">
                         </div>
                     </div>
                 </div>
@@ -69,27 +77,36 @@
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bell fa-fw"></i>Personal Details
+                    <i class="fa fa-bell fa-fw"></i>Transfer Details
                 </div>
                 <div class="panel-body">
                     <div class="panel-body">
                         <div class="form-group">
-                         <label>Date issued</label>
-                        <input type="date" id="" class="form-control" placeholder="Date issued" disabled="disabled">
+                            <label>Date Transfered</label>
+                            <input type="date" id="" class="form-control" placeholder="Date issued" disabled="disabled">
                         </div>
                         <div class="form-group">
-                         <label>Issued to</label>
-                        <input type="text" id="" class="form-control" placeholder="Issued to">
+                            <label>Relocate to</label>
+                            <%--<input type="text" id="" class="form-control" placeholder="Issued to">--%>
+                            <asp:DropDownList ID="drpDistrictTansfer" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                         <label>Quantity</label>
-                        <input type="text" id="" class="form-control" placeholder="Quantity">
+                            <label>Office to Relocate</label>
+                            <%--<input type="text" id="" class="form-control" placeholder="Issued to">--%>
+                            <asp:DropDownList ID="drpDesignatedOffice" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                         <label>Custodian</label>
-                        <input type="text" id="" class="form-control" placeholder="Quantity">
+                            <label>Quantity</label>
+                            <input type="text" id="" class="form-control" placeholder="Quantity">
                         </div>
-                        
+                        <div class="form-group">
+                            <label>Custodian</label>
+                            <input type="text" id="" class="form-control" placeholder="Custodian">
+                        </div>
+                        <div class="form-group">
+                            <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-primary" />
+                            <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-success pull-right" />
+                        </div>
                     </div>
                 </div>
             </div>
