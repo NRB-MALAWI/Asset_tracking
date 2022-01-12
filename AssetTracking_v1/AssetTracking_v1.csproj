@@ -100,6 +100,7 @@
     <Content Include="Admin\Add_Location.aspx" />
     <Content Include="Admin\Add_Role.aspx" />
     <Content Include="Admin\Add_User.aspx" />
+    <Content Include="Admin\Asset_Sheet.aspx" />
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\Issue_Asset.aspx" />
     <Content Include="Admin\Manage_Location.aspx" />
@@ -216,6 +217,13 @@
     <Compile Include="Admin\Administrator.Master.designer.cs">
       <DependentUpon>Administrator.Master</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Asset_Sheet.aspx.cs">
+      <DependentUpon>Asset_Sheet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Asset_Sheet.aspx.designer.cs">
+      <DependentUpon>Asset_Sheet.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -306,6 +314,11 @@
     </Compile>
     <Compile Include="ARO\View_Assets.aspx.designer.cs">
       <DependentUpon>View_Assets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -421,6 +434,17 @@
     <Content Include="NRBAssetsDataSet.xsc">
       <DependentUpon>NRBAssetsDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSet1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
     <None Include="NRBAssetsDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>NRBAssetsDataSet.Designer.cs</LastGenOutput>
@@ -464,7 +488,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AssetSheet.rdlc" />
+    <EmbeddedResource Include="InventorySheet.rdlc" />
     <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="Report2.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

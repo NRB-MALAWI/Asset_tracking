@@ -5,10 +5,17 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i></i>
-
-                    <div class="pull-right">
-                        <div class="btn-group">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="input-group custom-search-form">
+                                    <asp:DropDownList ID="txtAssetName" AutoPostBack="true" CssClass="form-control" runat="server" DataTextField="Asset_Name" DataValueField="Asset_Name" OnSelectedIndexChanged="txtAssetName_SelectedIndexChanged" />
+                                    <%--<input type="text" class="form-control" id="txtAssetNumber" runat="server" placeholder="Search for Asset Number...">--%>
+                                    <span class="input-group-btn">
+                                        <asp:Button ID="btnSearchAssetNumber" Text="Search" runat="server" CssClass="btn btn-primary" />
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

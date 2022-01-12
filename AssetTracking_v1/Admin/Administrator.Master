@@ -104,6 +104,9 @@
                                     <li>
                                         <a href="Transfer_Assets.aspx">Transfer Asset</a>
                                     </li>
+                                    <li>
+                                        <asp:HyperLink Text="Generate Asset Sheet" NavigateUrl="~/Admin/Asset_Sheet.aspx" runat="server" />
+                                    </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
