@@ -27,9 +27,11 @@ namespace AssetTracking_v1.Admin
         [Obsolete]
         void Add_Users()
         {
-            string query = "";
+            
             //Asset_User user = new Asset_User();
             string password = FormsAuthentication.HashPasswordForStoringInConfigFile(txtPassword.Text, "SHA1");
+            string query = "insert into User(FirstName,OtherNames,Surname,Password,Username) " +
+                "values('"+ txtfirstname.Text + "','"+ txtOthernames.Text + "','"+ txtSurname.Text + "','"+ password + "','"+ txtusername.Text + "','')";
 
             try
             {
