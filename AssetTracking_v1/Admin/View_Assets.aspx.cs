@@ -12,7 +12,7 @@ namespace AssetTracking_v1.Admin
 {
     public partial class View_Assets : System.Web.UI.Page
     {
-        NRBAssetsEntities assetsEntities = new NRBAssetsEntities();
+        //NRBAssetsEntities assetsEntities = new NRBAssetsEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
