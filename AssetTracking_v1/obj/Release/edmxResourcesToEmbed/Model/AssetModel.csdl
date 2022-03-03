@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NRBAssetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Asset">
+    <Key>
+      <PropertyRef Name="Asset_No" />
+    </Key>
+    <Property Name="Asset_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateCreated" Type="DateTime" Precision="0" />
+    <Property Name="Asset_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Manufacturer" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Serial_No" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Acquired_Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DistrictID" Type="Int64" Nullable="false" />
+    <Property Name="Designated_Office" Type="Int32" Nullable="false" />
+    <Property Name="Designated_Department" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Room_No" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="custodian" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Comments" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Source_of_funds" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Landing_cost" Type="Int32" />
+    <Property Name="EditUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="District" Relationship="Self.FK__Asset__DistrictI__73BA3083" FromRole="Asset" ToRole="District" />
+    <Property Name="Quantity" Type="Int64" />
+    <NavigationProperty Name="Issuances" Relationship="NRBAssetsModel.FK__Issuance__Asset___29221CFB" FromRole="Asset" ToRole="Issuance" />
+  </EntityType>
+  <EntityType Name="AssetLocation">
+    <Key>
+      <PropertyRef Name="LocationID" />
+    </Key>
+    <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DistrictID" Type="Int64" Nullable="false" />
+    <Property Name="place" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="District" Relationship="Self.FK__AssetLoca__Distr__1A14E395" FromRole="AssetLocations" ToRole="District" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="DistrictId" />
+    </Key>
+    <Property Name="DistrictId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TimeOfLastDownload" Type="DateTime" Precision="3" />
+    <Property Name="TimeOfLastUpload" Type="DateTime" Precision="3" />
+    <Property Name="RegionId" Type="Int64" Nullable="false" />
+    <Property Name="EditUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EditMachine" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateOfEdit" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Version" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Assets" Relationship="Self.FK__Asset__DistrictI__73BA3083" FromRole="District" ToRole="Asset" />
+    <NavigationProperty Name="AssetLocations" Relationship="Self.FK__AssetLoca__Distr__1A14E395" FromRole="District" ToRole="AssetLocations" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__Source__6FE99F9F" FromRole="District" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="RequestId" />
+    </Key>
+    <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateRequested" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="SourceDistrict" Type="Int64" Nullable="false" />
+    <Property Name="SourceLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DestinationDistrict" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DestinationLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ItemStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReasonForTransfer" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EditUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="District" Relationship="Self.FK__Requests__Source__6FE99F9F" FromRole="Requests" ToRole="District" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OtherNames" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserROle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsUserActive" Type="Int64" />
+  </EntityType>
+  <Association Name="FK__Asset__DistrictI__73BA3083">
+    <End Role="District" Type="Self.District" Multiplicity="1" />
+    <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="DistrictId" />
+      </Principal>
+      <Dependent Role="Asset">
+        <PropertyRef Name="DistrictID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__AssetLoca__Distr__1A14E395">
+    <End Role="District" Type="Self.District" Multiplicity="1" />
+    <End Role="AssetLocations" Type="Self.AssetLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="DistrictId" />
+      </Principal>
+      <Dependent Role="AssetLocations">
+        <PropertyRef Name="DistrictID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Requests__Source__6FE99F9F">
+    <End Role="District" Type="Self.District" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="DistrictId" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="SourceDistrict" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NRBAssetsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Assets" EntityType="Self.Asset" />
+    <EntitySet Name="AssetLocations" EntityType="Self.AssetLocation" />
+    <EntitySet Name="Districts" EntityType="Self.District" />
+    <EntitySet Name="Requests" EntityType="Self.Request" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__Asset__DistrictI__73BA3083" Association="Self.FK__Asset__DistrictI__73BA3083">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Asset" EntitySet="Assets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__AssetLoca__Distr__1A14E395" Association="Self.FK__AssetLoca__Distr__1A14E395">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="AssetLocations" EntitySet="AssetLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Requests__Source__6FE99F9F" Association="Self.FK__Requests__Source__6FE99F9F">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <EntitySet Name="Issuances" EntityType="NRBAssetsModel.Issuance" />
+    <AssociationSet Name="FK__Issuance__Asset___29221CFB" Association="NRBAssetsModel.FK__Issuance__Asset___29221CFB">
+      <End Role="Asset" EntitySet="Assets" />
+      <End Role="Issuance" EntitySet="Issuances" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Issuance">
+    <Key>
+      <PropertyRef Name="Issuance_ID" />
+    </Key>
+    <Property Name="Issuance_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Asset_No" Type="Int32" />
+    <Property Name="Date_of_Issue" Type="DateTime" Precision="3" />
+    <Property Name="Issued_to" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Issued_by" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Asset" Relationship="NRBAssetsModel.FK__Issuance__Asset___29221CFB" FromRole="Issuance" ToRole="Asset" />
+  </EntityType>
+  <Association Name="FK__Issuance__Asset___29221CFB">
+    <End Type="NRBAssetsModel.Asset" Role="Asset" Multiplicity="0..1" />
+    <End Type="NRBAssetsModel.Issuance" Role="Issuance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Asset">
+        <PropertyRef Name="Asset_No" />
+      </Principal>
+      <Dependent Role="Issuance">
+        <PropertyRef Name="Asset_No" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

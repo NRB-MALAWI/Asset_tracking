@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NRBAssetsModelStoreContainer" CdmEntityContainer="NRBAssetsEntities">
+    <EntitySetMapping Name="Assets">
+      <EntityTypeMapping TypeName="NRBAssetsModel.Asset">
+        <MappingFragment StoreEntitySet="Asset">
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Asset_No" ColumnName="Asset_No" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Asset_Name" ColumnName="Asset_Name" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Serial_No" ColumnName="Serial_No" />
+          <ScalarProperty Name="Acquired_Date" ColumnName="Acquired_Date" />
+          <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+          <ScalarProperty Name="Designated_Office" ColumnName="Designated_Office" />
+          <ScalarProperty Name="Designated_Department" ColumnName="Designated_Department" />
+          <ScalarProperty Name="Room_No" ColumnName="Room_No" />
+          <ScalarProperty Name="custodian" ColumnName="custodian" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Source_of_funds" ColumnName="Source_of_funds" />
+          <ScalarProperty Name="Landing_cost" ColumnName="Landing_cost" />
+          <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssetLocations">
+      <EntityTypeMapping TypeName="NRBAssetsModel.AssetLocation">
+        <MappingFragment StoreEntitySet="AssetLocations">
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+          <ScalarProperty Name="place" ColumnName="place" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Districts">
+      <EntityTypeMapping TypeName="NRBAssetsModel.District">
+        <MappingFragment StoreEntitySet="District">
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="TimeOfLastDownload" ColumnName="TimeOfLastDownload" />
+          <ScalarProperty Name="TimeOfLastUpload" ColumnName="TimeOfLastUpload" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+          <ScalarProperty Name="EditMachine" ColumnName="EditMachine" />
+          <ScalarProperty Name="DateOfEdit" ColumnName="DateOfEdit" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="NRBAssetsModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="DateRequested" ColumnName="DateRequested" />
+          <ScalarProperty Name="SourceDistrict" ColumnName="SourceDistrict" />
+          <ScalarProperty Name="SourceLocation" ColumnName="SourceLocation" />
+          <ScalarProperty Name="DestinationDistrict" ColumnName="DestinationDistrict" />
+          <ScalarProperty Name="DestinationLocation" ColumnName="DestinationLocation" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemStatus" ColumnName="ItemStatus" />
+          <ScalarProperty Name="ReasonForTransfer" ColumnName="ReasonForTransfer" />
+          <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="NRBAssetsModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRoles">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="NRBAssetsModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="OtherNames" ColumnName="OtherNames" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserROle" ColumnName="UserROle" />
+          <ScalarProperty Name="IsUserActive" ColumnName="IsUserActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Issuances">
+      <EntityTypeMapping TypeName="NRBAssetsModel.Issuance">
+        <MappingFragment StoreEntitySet="Issuance">
+          <ScalarProperty Name="Issued_by" ColumnName="Issued_by" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Issued_to" ColumnName="Issued_to" />
+          <ScalarProperty Name="Date_of_Issue" ColumnName="Date_of_Issue" />
+          <ScalarProperty Name="Asset_No" ColumnName="Asset_No" />
+          <ScalarProperty Name="Issuance_ID" ColumnName="Issuance_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

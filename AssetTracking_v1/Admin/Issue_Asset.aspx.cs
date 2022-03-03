@@ -14,8 +14,8 @@ namespace AssetTracking_v1.Admin
 {
     public partial class Issue_Asset : System.Web.UI.Page
     {
-        NRBAssetsEntities assetsEntities = new NRBAssetsEntities();
-        string ConneString = ConfigurationManager.ConnectionStrings["NRBAssetsConnectionString"].ToString();
+        //NRBAssetsEntities assetsEntities = new NRBAssetsEntities();
+        //string ConneString = ConfigurationManager.ConnectionStrings["NRBAssetsConnectionString"].ToString();
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -28,23 +28,41 @@ namespace AssetTracking_v1.Admin
         // Listing all districts
         void GetDistrict()
         {
-            drpSearchAssetbyDistrict.Items.Insert(0, "SELECT DISTRICT");
-            var context = from d in assetsEntities.Districts
-                          where d.DistrictId > 0
-                          orderby d.Name
-                          select new
-                          {
-                              d.DistrictId,
-                              d.Name
-                          };
-            drpSearchAssetbyDistrict.DataSource = context.ToList();
-            drpSearchAssetbyDistrict.DataBind();
+            string query = "select * from district where districtid>0 order by name";
+            using(SqlConnection con = new SqlConnection(DBConnect.Connects()))
+            {
+                con.Open();
+                using(SqlCommand cmd = new SqlCommand(query,con))
+                {
+                    using(SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        using(DataTable dt = new DataTable())
+                        {
+                            da.Fill(dt);
+                            drpSearchAssetbyDistrict.DataSource = dt;
+                            drpSearchAssetbyDistrict.DataBind();
+                        }
+                    }
+                }
+                con.Close();
+            }
+            //drpSearchAssetbyDistrict.Items.Insert(0, "SELECT DISTRICT");
+            //var context = from d in assetsEntities.Districts
+            //              where d.DistrictId > 0
+            //              orderby d.Name
+            //              select new
+            //              {
+            //                  d.DistrictId,
+            //                  d.Name
+            //              };
+            //drpSearchAssetbyDistrict.DataSource = context.ToList();
+            //drpSearchAssetbyDistrict.DataBind();
         }
         // Listing all Assets 
         void GetAsset()
         {
             
-            using (SqlConnection con = new SqlConnection(ConneString))
+            using (SqlConnection con = new SqlConnection(DBConnect.Connects()))
             {
                 string query = "select Asset_Name from Asset group by Asset_Name";
                 using (SqlCommand cmd = new SqlCommand(query, con))
@@ -65,84 +83,106 @@ namespace AssetTracking_v1.Admin
         // DIsplaying Data in GridView
         void Display_Data()
         {
-            var context = (from a in assetsEntities.Assets
-                           join d in assetsEntities.Districts
-                           on a.DistrictID equals d.DistrictId
-                           join l in assetsEntities.AssetLocations
-                           on a.Designated_Office equals l.LocationID
-                           where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-                           select new
-                           {
-                               a.Asset_No,
-                               a.Asset_Name,
-                               d.Name,
-                               l.place,
-                               a.Designated_Department,
-                               a.Quantity
-                           }
-                           ).ToList();
-            GridView1.DataSource = context;
-            GridView1.DataBind();
+            string query = "select a.Asset_No, a.Asset_Name, d.Name as District, l.place, a.Designated_Department, a.Quantity from Assets a " +
+                "join districts d on d.districtid=a.districtid join AssetLocations l on l.locationid=a.Designated_Office " +
+                "where a.saaet_name='"+ txtAssetName.SelectedValue.ToString() + "'";
+            using(SqlConnection con = new SqlConnection())
+            {
+                con.Open();
+                using(SqlCommand cmd = new SqlCommand(query,con))
+                {
+                    using(SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        using(DataTable dt = new DataTable())
+                        {
+                            da.Fill(dt);
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                    }
+                }
+                con.Close();
+            }
+            //var context = (from a in assetsEntities.Assets
+            //               join d in assetsEntities.Districts
+            //               on a.DistrictID equals d.DistrictId
+            //               join l in assetsEntities.AssetLocations
+            //               on a.Designated_Office equals l.LocationID
+            //               where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
+            //               select new
+            //               {
+            //                   a.Asset_No,
+            //                   a.Asset_Name,
+            //                   d.Name,
+            //                   l.place,
+            //                   a.Designated_Department,
+            //                   a.Quantity
+            //               }
+            //               ).ToList();
+            //GridView1.DataSource = context;
+            //GridView1.DataBind();
         }
 
         // Listing Assets by name
         protected void txtAssetName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //using (SqlConnection con = new SqlConnection(ConneString))
-            //{
-            //    string query = "select a.Asset_No,a.Asset_Name,d.Name as District,l.place as Office,a.Designated_Department,a.Quantity from Asset a " +
-            //        "join District d on d.DistrictId=a.DistrictID join AssetLocations l on l.LocationID=a.Designated_Office where a.Asset_Name='"+txtAssetName.SelectedValue+"'";
-            //    using (SqlCommand cmd = new SqlCommand(query, con))
-            //    {
-            //        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-            //        {
-            //            DataTable dt = new DataTable();
-            //            da.Fill(dt);
-            //            GridView1.DataSource = dt;
-            //            GridView1.DataBind();
-            //        }
-            //    }
-            //}
-            var context = (from a in assetsEntities.Assets
-                           join d in assetsEntities.Districts
-                           on a.DistrictID equals d.DistrictId
-                           join l in assetsEntities.AssetLocations
-                           on a.Designated_Office equals l.LocationID
-                           where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-                           select new
-                           {
-                               a.Asset_No,
-                               a.Asset_Name,
-                               District=d.Name,
-                               l.place,
-                               a.Designated_Department,
-                               a.Quantity
-                           }
-                           ).ToList();
-            GridView1.DataSource = context;
-            GridView1.DataBind();
+            using (SqlConnection con = new SqlConnection(DBConnect.Connects()))
+            {
+                con.Open();
+                string query = "select a.Asset_No,a.Asset_Name,d.Name as District,l.place as Office,a.Designated_Department,a.Quantity from Asset a " +
+                    "join District d on d.DistrictId=a.DistrictID join AssetLocations l on l.LocationID=a.Designated_Office where a.Asset_Name='" + txtAssetName.SelectedValue + "'";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        GridView1.DataSource = dt;
+                        GridView1.DataBind();
+                    }
+                }
+                con.Close();
+            }
+            //var context = (from a in assetsEntities.Assets
+            //               join d in assetsEntities.Districts
+            //               on a.DistrictID equals d.DistrictId
+            //               join l in assetsEntities.AssetLocations
+            //               on a.Designated_Office equals l.LocationID
+            //               where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
+            //               select new
+            //               {
+            //                   a.Asset_No,
+            //                   a.Asset_Name,
+            //                   District=d.Name,
+            //                   l.place,
+            //                   a.Designated_Department,
+            //                   a.Quantity
+            //               }
+            //               ).ToList();
+            //GridView1.DataSource = context;
+            //GridView1.DataBind();
         }
 
         protected void btnSearchAssetName_Click(object sender, EventArgs e)
         {
-            var context = (from a in assetsEntities.Assets
-                           join d in assetsEntities.Districts
-                           on a.DistrictID equals d.DistrictId
-                           join l in assetsEntities.AssetLocations
-                           on a.Designated_Office equals l.LocationID
-                           where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-                           select new
-                           {
-                               a.Asset_No,
-                               a.Asset_Name,
-                               District=d.Name,
-                               l.place,
-                               a.Designated_Department,
-                               a.Quantity
-                           }
-                           ).ToList();
-            GridView1.DataSource = context;
-            GridView1.DataBind();
+            //var context = (from a in assetsEntities.Assets
+            //               join d in assetsEntities.Districts
+            //               on a.DistrictID equals d.DistrictId
+            //               join l in assetsEntities.AssetLocations
+            //               on a.Designated_Office equals l.LocationID
+            //               where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
+            //               select new
+            //               {
+            //                   a.Asset_No,
+            //                   a.Asset_Name,
+            //                   District=d.Name,
+            //                   l.place,
+            //                   a.Designated_Department,
+            //                   a.Quantity
+            //               }
+            //               ).ToList();
+            //GridView1.DataSource = context;
+            //GridView1.DataBind();
 
         }
 
@@ -157,14 +197,15 @@ namespace AssetTracking_v1.Admin
         // Inserting Items in Issuance table
         void UpdateAsset()
         {
-            Issuance _issue = new Issuance();
-            _issue.Asset_No = int.Parse(txtAssetNo.Value);
-            _issue.Date_of_Issue = DateTime.Now;
-            _issue.Issued_by = UserLogin.username;
-            _issue.Issued_to = txtIssued_to.Value;
-            _issue.Quantity = int.Parse(txtQuanityIssue.Value);
-            assetsEntities.Issuances.Add(_issue);
-            assetsEntities.SaveChanges();
+            //Issuance _issue = new Issuance();
+            //_issue.Asset_No = int.Parse(txtAssetNo.Value);
+            //_issue.Date_of_Issue = DateTime.Now;
+            //_issue.Issued_by = UserLogin.username;
+            //_issue.Issued_to = txtIssued_to.Value;
+            //_issue.Quantity = int.Parse(txtQuanityIssue.Value);
+            //assetsEntities.Issuances.Add(_issue);
+            //assetsEntities.SaveChanges();
+
             //using (NRBAssetsEntities db = new NRBAssetsEntities())
             //{
             //    Asset asset = db.Assets.Where(a => a.Asset_No == Convert.ToInt32(txtAssetNo.Value)).First();
@@ -208,7 +249,7 @@ namespace AssetTracking_v1.Admin
                     {
                         if (txtAssetNo.Value != string.Empty)
                         {
-                            using (SqlConnection con = new SqlConnection(ConneString))
+                            using (SqlConnection con = new SqlConnection(DBConnect.Connects()))
                             {
                                 string query = "update Asset set Quantity=Quantity-" + int.Parse(txtQuanityIssue.Value) + " where Asset_No=" + int.Parse(txtAssetNo.Value) + " ";
                                 con.Open();
@@ -248,25 +289,25 @@ namespace AssetTracking_v1.Admin
                 try
                 {
                     ClearFields();
-                    var context = (from a in assetsEntities.Assets
-                                   join d in assetsEntities.Districts
-                                   on a.DistrictID equals d.DistrictId
-                                   join l in assetsEntities.AssetLocations
-                                   on a.Designated_Office equals l.LocationID
-                                   where d.Name.Equals(""+drpSearchAssetbyDistrict.SelectedValue.ToString()+"")
-                                   //where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-                                   select new
-                                   {
-                                       a.Asset_No,
-                                       a.Asset_Name,
-                                       District = d.Name,
-                                       l.place,
-                                       a.Designated_Department,
-                                       a.Quantity
-                                   }
-                           ).ToList();
-                    GridView1.DataSource = context;
-                    GridView1.DataBind();
+                    //var context = (from a in assetsEntities.Assets
+                    //               join d in assetsEntities.Districts
+                    //               on a.DistrictID equals d.DistrictId
+                    //               join l in assetsEntities.AssetLocations
+                    //               on a.Designated_Office equals l.LocationID
+                    //               where d.Name.Equals(""+drpSearchAssetbyDistrict.SelectedValue.ToString()+"")
+                    //               //where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
+                    //               select new
+                    //               {
+                    //                   a.Asset_No,
+                    //                   a.Asset_Name,
+                    //                   District = d.Name,
+                    //                   l.place,
+                    //                   a.Designated_Department,
+                    //                   a.Quantity
+                    //               }
+                    //       ).ToList();
+                    //GridView1.DataSource = context;
+                    //GridView1.DataBind();
                 }
                 catch(Exception es)
                 {
@@ -278,25 +319,25 @@ namespace AssetTracking_v1.Admin
                 try
                 {
                     ClearFields();
-                    var context = (from a in assetsEntities.Assets
-                                   join d in assetsEntities.Districts
-                                   on a.DistrictID equals d.DistrictId
-                                   join l in assetsEntities.AssetLocations
-                                   on a.Designated_Office equals l.LocationID
-                                   where d.Name.Equals("" + drpSearchAssetbyDistrict.SelectedValue.ToString() + "") &&
-                                   a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-                                   select new
-                                   {
-                                       a.Asset_No,
-                                       a.Asset_Name,
-                                       District = d.Name,
-                                       l.place,
-                                       a.Designated_Department,
-                                       a.Quantity
-                                   }
-                           ).ToList();
-                    GridView1.DataSource = context;
-                    GridView1.DataBind();
+                    //var context = (from a in assetsEntities.Assets
+                    //               join d in assetsEntities.Districts
+                    //               on a.DistrictID equals d.DistrictId
+                    //               join l in assetsEntities.AssetLocations
+                    //               on a.Designated_Office equals l.LocationID
+                    //               where d.Name.Equals("" + drpSearchAssetbyDistrict.SelectedValue.ToString() + "") &&
+                    //               a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
+                    //               select new
+                    //               {
+                    //                   a.Asset_No,
+                    //                   a.Asset_Name,
+                    //                   District = d.Name,
+                    //                   l.place,
+                    //                   a.Designated_Department,
+                    //                   a.Quantity
+                    //               }
+                    //       ).ToList();
+                    //GridView1.DataSource = context;
+                    //GridView1.DataBind();
                 }
                 catch(Exception es)
                 {
@@ -312,25 +353,25 @@ namespace AssetTracking_v1.Admin
                 try
                 {
                     ClearFields();
-                    var context = (from a in assetsEntities.Assets
-                           join d in assetsEntities.Districts
-                           on a.DistrictID equals d.DistrictId
-                           join l in assetsEntities.AssetLocations
-                           on a.Designated_Office equals l.LocationID
-                           where d.Name == drpSearchAssetbyDistrict.SelectedValue
-                           //where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-                           select new
-                           {
-                               a.Asset_No,
-                               a.Asset_Name,
-                               District = d.Name,
-                               l.place,
-                               a.Designated_Department,
-                               a.Quantity
-                           }
-                   ).ToList();
-                   GridView1.DataSource = context;
-                   GridView1.DataBind();
+                   // var context = (from a in assetsEntities.Assets
+                   //        join d in assetsEntities.Districts
+                   //        on a.DistrictID equals d.DistrictId
+                   //        join l in assetsEntities.AssetLocations
+                   //        on a.Designated_Office equals l.LocationID
+                   //        where d.Name == drpSearchAssetbyDistrict.SelectedValue
+                   //        //where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
+                   //        select new
+                   //        {
+                   //            a.Asset_No,
+                   //            a.Asset_Name,
+                   //            District = d.Name,
+                   //            l.place,
+                   //            a.Designated_Department,
+                   //            a.Quantity
+                   //        }
+                   //).ToList();
+                   //GridView1.DataSource = context;
+                   //GridView1.DataBind();
                 }
                 catch (Exception es)
                 {
@@ -342,25 +383,25 @@ namespace AssetTracking_v1.Admin
                 try
                 {
                     ClearFields();
-                    var context = (from a in assetsEntities.Assets
-                                   join d in assetsEntities.Districts
-                                   on a.DistrictID equals d.DistrictId
-                                   join l in assetsEntities.AssetLocations
-                                   on a.Designated_Office equals l.LocationID
-                                   where d.Name.Equals("" + drpSearchAssetbyDistrict.SelectedValue + "") &&
-                                   a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-                                   select new
-                                   {
-                                       a.Asset_No,
-                                       a.Asset_Name,
-                                       District = d.Name,
-                                       l.place,
-                                       a.Designated_Department,
-                                       a.Quantity
-                                   }
-                           ).ToList();
-                    GridView1.DataSource = context;
-                    GridView1.DataBind();
+                    //var context = (from a in assetsEntities.Assets
+                    //               join d in assetsEntities.Districts
+                    //               on a.DistrictID equals d.DistrictId
+                    //               join l in assetsEntities.AssetLocations
+                    //               on a.Designated_Office equals l.LocationID
+                    //               where d.Name.Equals("" + drpSearchAssetbyDistrict.SelectedValue + "") &&
+                    //               a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
+                    //               select new
+                    //               {
+                    //                   a.Asset_No,
+                    //                   a.Asset_Name,
+                    //                   District = d.Name,
+                    //                   l.place,
+                    //                   a.Designated_Department,
+                    //                   a.Quantity
+                    //               }
+                    //       ).ToList();
+                    //GridView1.DataSource = context;
+                    //GridView1.DataBind();
                 }
                 catch (Exception es)
                 {

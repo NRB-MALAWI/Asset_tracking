@@ -13,11 +13,11 @@ namespace AssetTracking_v1.Admin
         {
             Usernamelbl.Text = UserLogin.username;
 
-            if (Usernamelbl.Text=="")
+            if (Usernamelbl.Text == "")
             {
                 Response.Redirect(@"~/Signin.aspx");
             }
-            
+
         }
     }
 }
