@@ -177,4 +177,3 @@ C:\Users\ISSAH\source\repos\AssetTracking_v1\AssetTracking_v1\bin\zh-CHS\Microso
 C:\Users\ISSAH\source\repos\AssetTracking_v1\AssetTracking_v1\bin\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
 C:\Users\ISSAH\source\repos\AssetTracking_v1\AssetTracking_v1\obj\Debug\RdlCompile.cache
 C:\Users\ISSAH\source\repos\AssetTracking_v1\AssetTracking_v1\obj\Debug\RdlCompile.compiled
-C:\Users\ISSAH\source\repos\AssetTracking_v1\AssetTracking_v1\obj\Debug\AssetTracking_v1.csproj.AssemblyReference.cache

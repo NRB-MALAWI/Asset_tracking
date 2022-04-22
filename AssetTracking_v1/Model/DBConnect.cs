@@ -11,7 +11,7 @@ namespace AssetTracking_v1.Model
     {
         public static string Connects()
         {
-            string connection = @"Data Source=issah\ti;Initial Catalog=NRBAssets;Integrated Security=True";
+            string connection = @"Data Source=issah\sqlexpress;Initial Catalog=NRBAssets;User ID=sa;Password=lengan1";
 
             //string connection = ConfigurationManager.ConnectionStrings["Inrs.Model"].ToString();
 

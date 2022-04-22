@@ -46,17 +46,6 @@ namespace AssetTracking_v1.Admin
                 }
                 con.Close();
             }
-            //drpSearchAssetbyDistrict.Items.Insert(0, "SELECT DISTRICT");
-            //var context = from d in assetsEntities.Districts
-            //              where d.DistrictId > 0
-            //              orderby d.Name
-            //              select new
-            //              {
-            //                  d.DistrictId,
-            //                  d.Name
-            //              };
-            //drpSearchAssetbyDistrict.DataSource = context.ToList();
-            //drpSearchAssetbyDistrict.DataBind();
         }
         // Listing all Assets 
         void GetAsset()
@@ -103,24 +92,6 @@ namespace AssetTracking_v1.Admin
                 }
                 con.Close();
             }
-            //var context = (from a in assetsEntities.Assets
-            //               join d in assetsEntities.Districts
-            //               on a.DistrictID equals d.DistrictId
-            //               join l in assetsEntities.AssetLocations
-            //               on a.Designated_Office equals l.LocationID
-            //               where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-            //               select new
-            //               {
-            //                   a.Asset_No,
-            //                   a.Asset_Name,
-            //                   d.Name,
-            //                   l.place,
-            //                   a.Designated_Department,
-            //                   a.Quantity
-            //               }
-            //               ).ToList();
-            //GridView1.DataSource = context;
-            //GridView1.DataBind();
         }
 
         // Listing Assets by name
@@ -130,7 +101,8 @@ namespace AssetTracking_v1.Admin
             {
                 con.Open();
                 string query = "select a.Asset_No,a.Asset_Name,d.Name as District,l.place as Office,a.Designated_Department,a.Quantity from Asset a " +
-                    "join District d on d.DistrictId=a.DistrictID join AssetLocations l on l.LocationID=a.Designated_Office where a.Asset_Name='" + txtAssetName.SelectedValue + "'";
+                    "join District d on d.DistrictId=a.DistrictID join AssetLocations l on l.LocationID = a.Designated_Office " +
+                    "where a.Asset_Name='" + txtAssetName.SelectedValue + "'";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -143,28 +115,28 @@ namespace AssetTracking_v1.Admin
                 }
                 con.Close();
             }
-            //var context = (from a in assetsEntities.Assets
-            //               join d in assetsEntities.Districts
-            //               on a.DistrictID equals d.DistrictId
-            //               join l in assetsEntities.AssetLocations
-            //               on a.Designated_Office equals l.LocationID
-            //               where a.Asset_Name.Equals("" + txtAssetName.SelectedValue.ToString() + "")
-            //               select new
-            //               {
-            //                   a.Asset_No,
-            //                   a.Asset_Name,
-            //                   District=d.Name,
-            //                   l.place,
-            //                   a.Designated_Department,
-            //                   a.Quantity
-            //               }
-            //               ).ToList();
-            //GridView1.DataSource = context;
-            //GridView1.DataBind();
+            
         }
 
         protected void btnSearchAssetName_Click(object sender, EventArgs e)
         {
+            string query = "select a.Asset_No,a.Asset_Name,d.Name as District,l.place as Office,a.Designated_Department,a.Quantity from Asset a " +
+                    "join District d on d.DistrictId=a.DistrictID join AssetLocations l on l.LocationID = a.Designated_Office " +
+                    "where a.Asset_Name='" + txtAssetName.SelectedValue + "'";
+
+            using (SqlConnection con = new SqlConnection(DBConnect.Connects()))
+            {
+                using(SqlCommand cmd = new SqlCommand())
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        GridView1.DataSource = dt;
+                        GridView1.DataBind();
+                    }
+                }
+            }
             //var context = (from a in assetsEntities.Assets
             //               join d in assetsEntities.Districts
             //               on a.DistrictID equals d.DistrictId
@@ -197,6 +169,20 @@ namespace AssetTracking_v1.Admin
         // Inserting Items in Issuance table
         void UpdateAsset()
         {
+            //string test = @"Data Source=issah\ti;Initial Catalog=NRBAssets;Integrated Security=True";
+            string query = "insert into Issuance(Asset_No,Date_of_Issue,Issued_to,Quantity,Issued_by) " +
+                "values(" + txtAssetNo.Value + ",'" + DateTime.Now + "','" + txtIssued_to.Value + "','" + txtQuanityIssue.Value + "','" + UserLogin.username + "') ";
+                
+            using(SqlConnection con = new SqlConnection(DBConnect.Connects()))
+            {
+                con.Open();
+                using(SqlCommand cmd = new SqlCommand(query,con))
+                {
+                    cmd.ExecuteNonQuery();
+
+                }
+                con.Close();
+            }
             //Issuance _issue = new Issuance();
             //_issue.Asset_No = int.Parse(txtAssetNo.Value);
             //_issue.Date_of_Issue = DateTime.Now;
@@ -247,28 +233,28 @@ namespace AssetTracking_v1.Admin
                 {
                     try
                     {
-                        if (txtAssetNo.Value != string.Empty)
-                        {
+                            string query = "insert into Issuance(Asset_No,Date_of_Issue,Issued_to,Quantity,Issued_by) " +
+                            "values(" + txtAssetNo.Value + ",'" + DateTime.Now + "','" + txtIssued_to.Value + "','" + txtQuanityIssue.Value + "'," +
+                            "'" + UserLogin.username + "') ";
+
                             using (SqlConnection con = new SqlConnection(DBConnect.Connects()))
                             {
-                                string query = "update Asset set Quantity=Quantity-" + int.Parse(txtQuanityIssue.Value) + " where Asset_No=" + int.Parse(txtAssetNo.Value) + " ";
                                 con.Open();
                                 using (SqlCommand cmd = new SqlCommand(query, con))
                                 {
                                     cmd.ExecuteNonQuery();
+                                    MSGLabel.ForeColor = Color.Green;
+                                    MSGLabel.Text = "ITEM " + txtAsset_name.Value + " HAS BEEN ISSUED to " + txtIssued_to.Value + " SUCCESSFULLY";
                                 }
                                 con.Close();
                             }
-                            UpdateAsset();
-                            MSGLabel.ForeColor = Color.Green;
-                            MSGLabel.Text = "ITEM "+ txtAsset_name.Value +" HAS BEEN ISSUED to "+txtIssued_to.Value+" SUCCESSFULLY";
 
                             Display_Data();
-                        }
+                       
                     }
                     catch (Exception es)
                     {
-                        MSGLabel.Text = "Error !!!! Unable to Issue Asset " + es;
+                        MSGLabel.Text = "Error !!!! Unable to Issue Asset ";
                     }
 
                     ClearFields();

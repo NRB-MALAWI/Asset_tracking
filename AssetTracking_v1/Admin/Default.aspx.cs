@@ -18,7 +18,7 @@ namespace AssetTracking_v1.Admin
         {
             if(!IsPostBack)
             {
-                GetRecordsGroupByAssetName();
+                //GetRecordsGroupByAssetName();
             }
         }
         void GetRecordsGroupByAssetName()

@@ -24,22 +24,22 @@ namespace AssetTracking_v1.Admin
         }
         void Get_Issuances()
         {
-            using(NRBAssetsEntities assetsEntities = new NRBAssetsEntities())
-            {
-                var context = (from i in assetsEntities.Issuances
-                               join a in assetsEntities.Assets
-                               on i.Asset_No equals a.Asset_No
-                               select new
-                               {
-                                   i.Date_of_Issue,
-                                   a.Asset_Name,
-                                   i.Issued_to,
-                                   i.Quantity
-                               }
-                           ).ToList();
-                GridView1.DataSource = context;
-                GridView1.DataBind();
-            }
+            //using(NRBAssetsEntities assetsEntities = new NRBAssetsEntities())
+            //{
+            //    //var context = (from i in assetsEntities.Issuances
+            //    //               join a in assetsEntities.Assets
+            //    //               on i.Asset_No equals a.Asset_No
+            //    //               select new
+            //    //               {
+            //    //                   i.Date_of_Issue,
+            //    //                   a.Asset_Name,
+            //    //                   i.Issued_to,
+            //    //                   i.Quantity
+            //    //               }
+            //    //           ).ToList();
+            //    //GridView1.DataSource = context;
+            //    GridView1.DataBind();
+            //}
         }
         void GetAsset()
         {

@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\ISSAH\source\repos\AssetTracking_v1\AssetTracking_v1\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2022-03-01T10:18:50.8711915Z;</History>
+    <History>True|2022-03-09T10:08:42.4399225Z;True|2022-03-01T12:18:50.8711915+02:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Admin/Add_Asset.aspx">
@@ -66,10 +66,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/03/2021 13:12:02</publishTime>
     </File>
     <File Include="bin/AssetTracking_v1.dll">
-      <publishTime>03/01/2022 12:18:49</publishTime>
+      <publishTime>03/09/2022 12:08:39</publishTime>
     </File>
     <File Include="bin/AssetTracking_v1.pdb">
-      <publishTime>03/01/2022 12:18:49</publishTime>
+      <publishTime>03/09/2022 12:08:39</publishTime>
     </File>
     <File Include="bin/de/Microsoft.ReportViewer.Common.resources.dll">
       <publishTime>09/26/2021 00:14:24</publishTime>
@@ -756,7 +756,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>12/22/2021 20:13:31</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/01/2022 12:18:49</publishTime>
+      <publishTime>03/09/2022 12:08:40</publishTime>
     </File>
   </ItemGroup>
 </Project>
